@@ -1,3 +1,4 @@
+"use client";
 import { DM_Serif_Display, DM_Mono } from "next/font/google";
 import { Button } from "@/components/ui/button";
 
@@ -49,12 +50,20 @@ const meta = [
   { id: 4, label: "University", value: "Cavite State University" },
 ];
 
-const navItems = ["About", "Skills", "Experience", "Projects", "Contact"];
+
+
+const navItems = [
+  { navName: "About", idRef: "aboutId" },
+  { navName: "Skills", idRef: "skillsId" },
+  { navName: "Experience", idRef: "experienceId" },
+  { navName: "Projects", idRef: "projectsId" },
+  { navName: "Contact", idRef: "contactId" }
+];
 
 const project = [
-  { id: 1, name: "Project 1", description: "Project Description 1" },
-  { id: 2, name: "Project 2", description: "Project Description 2" },
-  { id: 3, name: "Project 3", description: "Project Description 3" }
+  { id: 1,  name: "Project 1", description: "Project Description 1" },
+  { id: 2,  name: "Project 2", description: "Project Description 2" },
+  { id: 3,  name: "Project 3", description: "Project Description 3" }
 ];
 
 export default function Home() {
@@ -63,13 +72,15 @@ export default function Home() {
 
       
       <nav className="w-full h-14 flex items-center bg-[var(--background)]/60 backdrop-blur-md justify-between border-b border-[var(--border)] px-6 sticky top-0 z-50" /* Nav Bar*/>
-        <h1 className="text-sm font-bold tracking-wide">ClarkLouise.dev</h1>
-        <ul className="flex gap-6 text-xs tracking-wide">
-          {navItems.map((item) => (
-            <li key={item}
-              className="text-[var(--foreground)]/50 hover:text-[var(--foreground)] border-b border-transparent hover:border-[var(--foreground)] pb-0.5 transition-all duration-200 cursor-pointer">
-              {item}
-            </li>
+        <h1 className="text-xs md:text-sm font-bold tracking-wide">ClarkLouise.dev</h1>
+        <ul className="hidden md:flex gap-6 text-xs tracking-wide">
+          { 
+            navItems.map((item) => (
+              <li key={item.idRef}
+                  onClick={() => document.getElementById(item.idRef)?.scrollIntoView({ behavior: "smooth" })}
+                  className="text-[var(--foreground)]/50 hover:text-[var(--foreground)] border-b border-transparent hover:border-[var(--foreground)] pb-0.5 transition-all duration-200 cursor-pointer">
+                  {item.navName}
+              </li>
           ))}
         </ul>
       </nav>
@@ -100,7 +111,8 @@ export default function Home() {
           </p>
 
           <div className="flex gap-2">
-            <Button className="h-9 px-5 text-xs rounded-md shadow-lg text-[var(--background)] bg-[var(--foreground)] hover:-translate-y-0.5 hover:bg-[var(--foreground)]">
+            <Button onClick={() => document.getElementById("projectsId")?.scrollIntoView({ behavior: "smooth" })}
+                    className="h-9 px-5 text-xs rounded-md shadow-lg text-[var(--background)] bg-[var(--foreground)] hover:-translate-y-0.5 hover:bg-[var(--foreground)]">
               View my work →
             </Button>
             <Button variant="outline" className="h-9 px-5 text-xs shadow-lg rounded-md hover:-translate-y-0.5 transition-transform ">
@@ -111,7 +123,7 @@ export default function Home() {
 
 
         
-        <section className="py-16"/*About Me */>
+        <section id="aboutId" className="py-16"/*About Me */>
           <SectionLabel text="About Me" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-6">
@@ -148,7 +160,7 @@ export default function Home() {
         </section>
 
       
-        <section className="py-17"/* Tech Stack */>
+        <section id="skillsId" className="py-17"/* Tech Stack */>
           <SectionLabel text="Tech Stack" />
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-8 mt-6">
@@ -176,13 +188,13 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="py-17"/* Projects */>
+        <section id="projectsId" className="py-17"/* Projects */>
           <SectionLabel text="Projects"/>
 
           <div className="flex flex-col rounded-sm bg-[var(--card)] border border-[var(--border)] mt-6">
               { project.map((project) => (
-                <div key={project.id} className=" border-b last:border-0 border-[var(--border)]">
-                  <div className="flex items-center justify-between px-4 py-3">
+                <div key={project.id} className=" border-b last:border-0 border-[var(--border)] px-6 py-4">
+                  <div className="flex items-center justify-between">
                     <h2  className="text-sm font-medium">
                       {project.name}
                     </h2> 
@@ -190,7 +202,7 @@ export default function Home() {
                       View Demo ↗
                     </Button>
                   </div>
-                  <span className="text-xs text-[var(--foreground)]/60 p-4">
+                  <span className="text-xs text-[var(--foreground)]/60">
                     {project.description}
                   </span>
                 </div>                            
